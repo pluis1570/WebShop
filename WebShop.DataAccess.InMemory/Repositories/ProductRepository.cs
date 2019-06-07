@@ -34,8 +34,17 @@ namespace WebShop.DataAccess.InMemory.Repositories
 
         public void Update(Product product)
         {
-            var tempProduct = FindProduct(product.Id);
-            Commit();
+            Product productToUpdate = Products.Find(p => p.Id == product.Id);
+
+            if (productToUpdate != null)
+            {
+                int index = Products.FindIndex(p => p.Id == productToUpdate.Id);
+                Products[index] = product;
+            }
+            else
+            {
+                throw new Exception("product not found");
+            }
         }
 
         public Product FindProduct(string Id)
@@ -53,11 +62,13 @@ namespace WebShop.DataAccess.InMemory.Repositories
             return Products.AsQueryable();
         }
 
-        public void Delete(string id)
+        public bool Delete(string id)
         {
             var tempProduct = FindProduct(id);
-            Products.Remove(tempProduct);
+            var removed = Products.Remove(tempProduct);
+
             Commit();
+            return (removed);
         }
     }
 }
