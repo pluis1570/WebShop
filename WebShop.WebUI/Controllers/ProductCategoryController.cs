@@ -1,41 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Webshop.Core.Models;
 using WebShop.DataAccess.InMemory.Repositories;
 
+
+
 namespace WebShop.WebUI.Controllers
 {
-    public class ProductController : Controller
+    public class ProductCategoryController : Controller
     {
-        public ProductRepository Context { get; set; } = new ProductRepository();
+        
+        public ProductCategoryRepository Context { get; set; } = new ProductCategoryRepository();
 
         // GET: Product
         public ActionResult Index()
         {
-            var products = Context.Collection().ToList();
+            var ProductCategories = Context.Collection().ToList();
 
-            return View(products);
+            return View(ProductCategories);
         }
 
 
         [HttpGet]
         public ActionResult Create()
         {
-            var product = new Product();
+            var ProductCategories = new ProductCatergory();
             return View();
         }
 
+
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(ProductCatergory ProductCategories)
         {
 
             if (!ModelState.IsValid)
                 return View();
 
-            Context.Insert(product);
+            Context.Insert(ProductCategories);
 
             return RedirectToAction("Index");
         }
@@ -63,7 +64,7 @@ namespace WebShop.WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit (string id)
+        public ActionResult Edit(string id)
         {
             var productToUpdate = Context.FindProduct(id);
 
@@ -71,9 +72,10 @@ namespace WebShop.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product)
+
+        public ActionResult Edit(ProductCatergory ProductCategories)
         {
-            Context.Update(product);
+            Context.Update(ProductCategories);
             Context.Commit();
             return RedirectToAction("Index");
         }

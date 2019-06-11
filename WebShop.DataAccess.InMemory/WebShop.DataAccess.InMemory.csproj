@@ -43,12 +43,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ProductCategoryRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Webshop.Core\Webshop.Core.csproj">
       <Project>{F08D2B5D-8C7E-4119-A5C3-CFF656DE1226}</Project>
       <Name>Webshop.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebShop.DataAccess.SQL\WebShop.DataAccess.SQL.csproj">
+      <Project>{264c5384-2fc9-44a0-b217-6b95f2c37baa}</Project>
+      <Name>WebShop.DataAccess.SQL</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
