@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Webshop.Core.Models;
 using Webshop.Core.ViewModels;
@@ -34,13 +36,25 @@ namespace WebShop.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Product product)
+        public ActionResult Create(Product product, HttpPostedFileBase file)
         {
-            if (!ModelState.IsValid)
-            return View();
-            Context.Insert(product);
-            Context.Commit();
-
+            if (ModelState.IsValid == false)
+            {
+                ProductManagerViewModel viewmodel = new ProductManagerViewModel();
+                viewmodel.Product = new Product();
+                viewmodel.ProductCatergories = ProductCategoryContext.Collection();
+                return View(viewmodel);
+            }
+            else
+            {
+                if (file != null)
+                {
+                    product.Image = product.Id + Path.GetExtension(file.FileName);
+                    file.SaveAs(Server.MapPath("~/Content/ProductImages/") + product.Image);
+                }
+                Context.Insert(product);
+                Context.Commit();
+            }
             return RedirectToAction("Index");
         }
 
@@ -84,10 +98,21 @@ namespace WebShop.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(Product product, HttpPostedFileBase file)
         {
-            Context.Update(product);
-            Context.Commit();
+            if (ModelState.IsValid)
+            {
+                if (file != null)
+                {
+                    product.Image = product.Id + Path.GetExtension(file.FileName);
+                    file.SaveAs(Server.MapPath("~/Content/ProductImages/") + product.Image);
+                    Context.Update(product);
+                    Context.Commit();
+                }
+
+            }
+
+            
             return RedirectToAction("Index");
         }
     }
