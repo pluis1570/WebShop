@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Webshop.Core.Models;
 using Webshop.Core.ViewModels;
 using WebShop.Core.Interfaces.Repositories;
-using WebShop.DataAccess.InMemory.Repositories;
 
 namespace WebShop.WebUI.Controllers
 {
@@ -60,8 +56,8 @@ namespace WebShop.WebUI.Controllers
         public ActionResult ConfirmDelete(string Id)
         {
             var productToDelete = Context.Delete(Id);
-            Context.Commit();
 
+            Context.Commit();
             if (productToDelete == false)
             {
                 return HttpNotFound();

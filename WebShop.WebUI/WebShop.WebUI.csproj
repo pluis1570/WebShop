@@ -324,6 +324,10 @@
       <Project>{80FCACFA-B496-477B-A754-464A61905F85}</Project>
       <Name>WebShop.DataAccess.InMemory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebShop.DataAccess.SQL\WebShop.DataAccess.SQL.csproj">
+      <Project>{264C5384-2FC9-44A0-B217-6B95F2C37BAA}</Project>
+      <Name>WebShop.DataAccess.SQL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

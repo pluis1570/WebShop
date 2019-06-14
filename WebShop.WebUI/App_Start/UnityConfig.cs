@@ -4,6 +4,7 @@ using Unity;
 using Webshop.Core.Models;
 using WebShop.Core.Interfaces.Repositories;
 using WebShop.DataAccess.InMemory.Repositories;
+using WebShop.DataAccess.SQL.Repositories;
 
 namespace WebShop.WebUI
 {
@@ -46,8 +47,8 @@ namespace WebShop.WebUI
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
 
-            container.RegisterType<IRepository<Product>, InMemoryRepository<Product>>();
-            container.RegisterType<IRepository<ProductCatergory>, InMemoryRepository<ProductCatergory>>();
+            container.RegisterType<IRepository<Product>, SQLRepositorty<Product>>();
+            container.RegisterType<IRepository<ProductCatergory>, SQLRepositorty<ProductCatergory>>();
         }
     }
 }
