@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using Webshop.Core.Models;
 using WebShop.Core.Interfaces.Repositories;
+using Webshop.Core.ViewModels;
+
 
 namespace WebShop.WebUI.Controllers
 {
@@ -20,11 +22,22 @@ namespace WebShop.WebUI.Controllers
         }
 
 
-        public ActionResult Index()
+        public ActionResult Index(string category = null)
         {
+            var productCategories = ProductCategoryContext.Collection().ToList();
+            var products = Context.Collection().ToList();
 
-            List<Product> products = Context.Collection().ToList();
-            return View(products);
+            if (category == null)
+                products = Context.Collection().ToList();
+            else
+                products = Context.Collection().Where(x => x.Category == category).ToList();
+
+            var viewModel = new ProductListViewModel();
+
+            viewModel.Categories = productCategories;
+            viewModel.Products = products;
+
+            return View(viewModel);
         }
 
         public ActionResult About()

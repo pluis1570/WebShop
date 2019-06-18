@@ -1,39 +1,69 @@
-﻿@model IEnumerable<Webshop.Core.Models.Product>
+﻿@model Webshop.Core.ViewModels.ProductListViewModel
+    @{
+        ViewBag.Title = "Home Page";
+    }
 
-@{
-    ViewBag.Title = "Home Page";
-}
+    <style>
+        .zoom {
+            padding: 20px;
+            transition: transform .2s; /* Animation */
+           /* width: 150px;*/
+            height: 250px;
+            margin: 0 auto;
+        }
 
-<h1>Products</h1>
+            .zoom:hover {
+                transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+            }
+    </style>
 
-<!-- Alle producten tonen  -->
-<div class=" row">
-    @foreach (var item in Model)
-    {
 
-        <div class="col-md-2" style="align-items:center;text-align:center; height:300px; padding:10px; margin:10px; border:solid thin whitesmoke">
 
-            <div class="col-md-12">
-                <img class="img" style=" height:150px" src="~/Content/ProductImages/@item.Image" />
-            </div>
+    <h1>Products</h1>
+    <div class=" row">
+        <h4>Filter By Category</h4>
+        <div class="list-group">
+            <div class="col-md-2">
+                @Html.ActionLink("All", "Index", null, new { @class = Request["Category"] == null ? "list-group-item active" : "list-group-item" })
 
-            <div class="col-md-12">
-                <strong>@Html.ActionLink(item.Name, "Details", new { id = item.Id })</strong>
-            </div>
+                @foreach (var item in Model.Categories)
+                {
 
-            <div class="col-md-12">
-                <p>@item.Description</p>
-            </div>
-
-            <div class="col-md-12">
-                <h4>@item.Price</h4>
-            </div>
-
-            <div class="col-md-12">
-                <a href="#" class="btn btn-success"><strong>Add To Cart</strong></a>
+                    @Html.ActionLink(item.Category, "Index", new { Category = item.Category }, new { @class = Request["Category"] == item.Category ? "list-group-item active" : "list-group-item" })
+                }
             </div>
         </div>
-    }
-</div>
-<div class="col-md-12 clearfix"/>
+
+
+        <!-- Alle producten tonen  -->
+        <div class=" col-md-10">
+            @foreach (var item in Model.Products)
+            {
+
+                <div class="col-md-2" style="align-items:center;text-align:center; height:300px; padding:10px; margin:10px; border:solid thin whitesmoke">
+
+                    <div class="col-md-12">
+                        <img class="img zoom" style=" height:150px;" src="~/Content/ProductImages/@item.Image" />
+                    </div>
+
+                    <div class="col-md-12">
+                        <strong>@Html.ActionLink(item.Name, "Details", new { id = item.Id })</strong>
+                    </div>
+
+                    <div class="col-md-12">
+                        <p>@item.Description</p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <h4>@item.Price</h4>
+                    </div>
+
+                    <div class="col-md-12">
+                        <a href="#" class="btn btn-success"><strong>Add To Cart</strong></a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-md-12 clearfix" />
 
